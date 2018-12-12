@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <div id ="buttons-view"></div>
+  <div id="buttons-view"></div>
 
   <!-- form created -->
   <form id="topics-form">
@@ -18,53 +18,45 @@
     <input id="add-topic" type="submit" value="Add a Muppet!">
   </form>
 
+  <div class = "giphy-view"></div>
+
+  <!-- Gifs will go here -->
+  <div id = "giphy-view">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
 
     var topics = ["kermit", "fozzie", "miss piggy", "gonzo", "scooter"];
 
-    function displayGiphyInfo(){
-    var topicName = $(this).attr("data-topics");
+    function displayGiphyInfo(event) {
+      var topicName = $(this).attr("data-topics");
 
-    // var APIKey = "GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD";
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q= " + topicName +
-      "&api_key=GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD&limit=10";
+      // var APIKey = "GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD";
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topicName + "&api_key=GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD&limit=10";
 
-    // $.ajax({
-    // // url: queryURL,
-    // method: "GET"
-    // }).then(function (response) {
-    // console.log(response);
-
-    // Creates a div to hold the movie
-    // var movieDiv = $("<div>");
-    // Retrieves the Rating Data
-    // Creates an element to have the rating displayed
-    // var rating = $("<p>");
-    // Displays the rating
-    // rating.text(response.Rated);
-    // Retrieves the release year
-    // Creates an element to hold the release year
-    // var year = $("<p>");
-    // Displays the release year
-    // year.text(response.Year);
-    // Retrieves the plot
-    // Creates an element to hold the plot
-    // var plot = $('<p>');
-    // Appends the plot
-    // plot.text(response.Plot);
-    // Creates an element to hold the image
-    // var img = $("<img />");
-    // Appends the image
-    // img.attr("src",response.Poster);
-    // Puts the entire Movie above the previous movies.
-    // $(".movies-view").prepend(img, plot,year, rating);
-    // });
-    // }
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (response) {
+        console.log(response);
+        //Create a dive to hold all the gifs
+        var gifDiv = $("<div>");
+        //Create a heading to hold the rating
+        var rating = $("<h3>");
+        //Display the rating in the DOM
+        rating.text("Rating: " + response.rating);
+        console.log(rating);
+        //Create an attribute for the giphy
+        var img = $("<img>");
+        img.attr("src", response.downsized_small);
+        //append them all to under the buttons
+        $(".giphy-view").append(rating, img);
+      })
     }
 
     //Create buttons for the topics in the existing topics array
     function renderButtons() {
+      $("#buttons-view").empty();
       for (var i = 0; i < topics.length; i++) {
         // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
         var topicBtn = $("<button>");
@@ -80,28 +72,20 @@
     }
 
     //Add buttons when a new topic is entered in the form
-    $("#add-topic").on("click", function(event){
-        event.PreventDefault(); //Prevent default to new screen
-        //Grab line of code from form box
-        var topicName = $("#topics-input").val().trim();
-        //Add the topicName to the original topics array
-        topics.push(topicName);
-        //Call renderButtons function to make the buttons work
-        renderButtons();
-    }
+    $("#add-topic").on("click", function (event) {
+      event.preventDefault(); //Prevent default to new screen
+      //Grab line of code from form box
+      var topicName = $("#topics-input").val().trim();
+      //Add the topicName to the original topics array
+      topics.push(topicName);
+      console.log(topicName);
+      //Call renderButtons function to make the buttons work
+      renderButtons();
+    })
 
-    //Create a function to grab the data from Giphy and assign to a new button
-
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response);
-      console.log(response.data[3])
-    });
-
-
-
+    // Adding click event listeners to all elements with a class of "movie"
+    $(document).on("click", ".topics", displayGiphyInfo);
+   
     renderButtons();
   </script>
 
