@@ -1,0 +1,16 @@
+.row{
+    padding-left: 700px;
+}
+
+button{
+    color: fuchsia;
+    margin: 5px;
+}
+
+.banner{
+    background-image: url(../images/muppet-banner2.jpg);
+    padding: 50px;
+    object-fit: contain;
+    height: 175px;
+    width: 1020px;
+}
