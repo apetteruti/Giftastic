@@ -46,7 +46,6 @@
         var topicName = $(this).attr("data-topics");
         console.log(topicName);
 
-        // var APIKey = "GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD";
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topicName +
           "&api_key=GEvRmvkEVGBT1B8kIXSX2032E6Xus3aD&limit=10";
         console.log(queryURL);
@@ -64,6 +63,7 @@
 
             //Create a div to hold all the gifs
             var gifDiv = $("<div>");
+            gifDiv.addClass("gifDivClass");
 
             //Create a heading to hold each rating as it comes through
             var ratingDiv = $("<h3>");
@@ -73,11 +73,9 @@
 
             //Create an attribute for the giphy
             var imgDiv = $("<img>");
-            imgDiv.class("image");
-            imgDiv.attr("src", response.data[i].images.fixed_height_small_still.url);
-            imgDiv.attr("src", response.data[i].images.fixed_height_small.url);
+            imgDiv.attr("src", response.data[i].images.fixed_height_still.url);
+            // imgDiv.attr("src", response.data[i].images.fixed_height_small.url);
 
-            
             //append to the gif DIV
             gifDiv.append(imgDiv);
 
@@ -118,20 +116,20 @@
       // Adding click event listeners to all elements with a class of "movie"
       $(document).on("click", ".topics", displayGiphyInfo, );
 
-     function pauseGif() {
-      var state = $(this).attr("data-state");
+    //  function pauseGif() {
+    //   var state = $(this).attr("data-state");
 
-      var animatedImage = $(this).attr("data-animate");
-      var stillImage = $(this).attr("data-still");
+    //   var animatedImage = $(this).attr("data-animate");
+    //   var stillImage = $(this).attr("data-still");
 
-      if (state === "still") {
-        $(this).attr("src", animatedImage);
-        $(this).attr("data-state", "animate");
-      } else {
-        $(this).attr("src", stillImage);
-        $(this).attr("data-state", "still");
-      }
-    };
+    //   if (state === "still") {
+    //     $(this).attr("src", animatedImage);
+    //     $(this).attr("data-state", "animate");
+    //   } else {
+    //     $(this).attr("src", stillImage);
+    //     $(this).attr("data-state", "still");
+    //   }
+    // };
 
       renderButtons();
     </script>

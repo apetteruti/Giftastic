@@ -16,6 +16,7 @@ button{
     margin-top: 10px;
 }
 
-.gifDiv{
+.gifDivClass{
     display: inline-block;
+    margin: 10px;
 }
