@@ -37,9 +37,9 @@ var topics = ["kermit", "fozzie bear", "miss piggy", "gonzo", "fraggles", "abby 
             var imgMove = (response.data[i].images.fixed_height.url);
             var imgPause = (response.data[i].images.fixed_height_still.url)
             //setting the attributes of the image
-            imgDiv.attr("src", imgMove); //image is moving to start
+            imgDiv.attr("src", imgPause); //image is still to start
             imgDiv.addClass ("gif"); //giving it a class
-            imgDiv.attr("data-state", "animate"); //the state of the image is moving to start
+            imgDiv.attr("data-state", "still"); //the state of the image is still to start
             imgDiv.attr("data-still", imgPause); //pulls the stopped image and assigs to data-still
             imgDiv.attr("data-animate", imgMove); //pulls the moving image and assigns to data-animate
             // console.log(response.data[i].images.fixed_height.url);
