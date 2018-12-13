@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-var topics = ["kermit", "fozzie bear", "miss piggy", "gonzo", "fraggles"];
+var topics = ["kermit", "fozzie bear", "miss piggy", "gonzo", "fraggles", "abby cadabby", "big bird", "animal muppet","dr. teeth", "oscar the grouch" ];
 
       //AJAX QUERY ===> Set up ajax to query Giphy API and pull data into site 
       function displayGiphyInfo(event) {
