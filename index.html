@@ -23,10 +23,10 @@
         <form id="topics-form">
           <label for="topics-input">Add your favorite muppet, Whakka Whakka!</label>
           <input type="text" id="topics-input"><br>
-
-          <!-- Button triggers new movie to be added -->
+                    <!-- Button triggers new movie to be added -->
           <input id="add-topic" type="submit" value="Add a Muppet!">
         </form>
+        <br><br>
       </div>
     </div>
 
@@ -39,7 +39,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-      var topics = ["kermit", "fozzie", "miss piggy", "gonzo", "scooter"];
+      var topics = ["kermit", "fozzie bear", "miss piggy", "gonzo", "fraggles"];
 
       //AJAX QUERY ===> Set up ajax to query Giphy API and pull data into site 
       function displayGiphyInfo(event) {
@@ -73,13 +73,20 @@
 
             //Create an attribute for the giphy
             var imgDiv = $("<img>");
-            imgDiv.attr("src", response.data[i].images.fixed_height_still.url);
-            // imgDiv.attr("src", response.data[i].images.fixed_height_small.url);
-
+            var imgMove = (response.data[i].images.fixed_height.url);
+            var imgPause = (response.data[i].images.fixed_height_still.url)
+            //setting the attributes of the image
+            imgDiv.attr("src", imgMove); //image is moving to start
+            imgDiv.addClass ("gif"); //giving it a class
+            imgDiv.attr("data-state", "animate"); //the state of the image is moving to start
+            imgDiv.attr("data-still", imgPause); //pulls the stopped image and assigs to data-still
+            imgDiv.attr("data-animate", imgMove); //pulls the moving image and assigns to data-animate
+            // console.log(response.data[i].images.fixed_height.url);
+            
             //append to the gif DIV
             gifDiv.append(imgDiv);
 
-            $("#giphy-view").append(gifDiv); //append the whole gifDiv to giphy-view
+            $("#giphy-view").append(gifDiv); //append the whole gifDiv to giphy-view 
           }
         })
       }
@@ -113,23 +120,26 @@
         renderButtons();
       })
 
+      //create a function to check to see if the gif is moving or not
+     $(".gif").on("click", function() {
+      var state = $(this).attr("data-state"); //assign a variable to see what the current state is
+      
+      var animatedImage = $(this).attr("data-animate");
+      var stillImage = $(this).attr("data-still");
+
+      if (state === "animate") { //if the state is moving
+        $(this).attr("src", stillImage); //then change the src so that it's pulling the still image from the api
+        $(this).attr("data-state", "still"); //change the data state to still
+      } 
+      else { //otherwise if the state is still...
+        $(this).attr("src", animatedImage); //change the src so that it's pulling the moving image from the api
+        $(this).attr("data-state", "animate"); //change the data state to animate
+      }
+    });
+
       // Adding click event listeners to all elements with a class of "movie"
-      $(document).on("click", ".topics", displayGiphyInfo, );
+      $(document).on("click", ".topics", displayGiphyInfo);
 
-    //  function pauseGif() {
-    //   var state = $(this).attr("data-state");
-
-    //   var animatedImage = $(this).attr("data-animate");
-    //   var stillImage = $(this).attr("data-still");
-
-    //   if (state === "still") {
-    //     $(this).attr("src", animatedImage);
-    //     $(this).attr("data-state", "animate");
-    //   } else {
-    //     $(this).attr("src", stillImage);
-    //     $(this).attr("data-state", "still");
-    //   }
-    // };
 
       renderButtons();
     </script>
